@@ -47,8 +47,39 @@ class LaunchframeSite extends TimberSite {
   }
 
 	function register_post_types() {
-		//this is where you can register custom post types
-
+		$labels = array(
+			'name'               => 'Resources',
+			'singular_name'      => 'Resource',
+			'menu_name'          => 'Resources',
+			'name_admin_bar'     => 'Resource',
+			'add_new'            => 'Add New',
+			'add_new_item'       => 'Add New Resource',
+			'new_item'           => 'New Resource',
+			'edit_item'          => 'Edit Resource',
+			'view_item'          => 'View Resource',
+			'all_items'          => 'All Resources',
+			'search_items'       => 'Search Resources',
+			'parent_item_colon'  => 'Parent Resources:',
+			'not_found'          => 'No resources found.',
+			'not_found_in_trash' => 'No resources found in Trash.'
+		);
+		$args = array(
+			'labels'             => $labels,
+	        'description'        => 'Resources',
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'resources' ),
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'taxonomies'         => array(),
+			'supports'           => array( 'title' )
+		);
+		register_post_type( 'resource', $args );
 	}
 
 	function register_taxonomies() {
@@ -69,6 +100,72 @@ class LaunchframeSite extends TimberSite {
 	}
 
 }
+
+/************* HIDE ACF FROM MENU ***************/
+add_filter('acf/settings/show_admin', 'my_acf_show_admin');
+
+function my_acf_show_admin( $show ) {
+	$current_user = wp_get_current_user();
+
+    if ($current_user->user_login == 'loyall') {
+    	return current_user_can('manage_options');
+    } else {
+    	return false;
+    }
+}
+/************* END HIDE ACF FROM MENU ***************/
+
+/************* ACF OPTIONS PAGE ***************/
+
+function mytheme_timber_context( $context ) {
+    $context['option'] = get_fields('option');
+    return $context;
+}
+add_filter( 'timber_context', 'mytheme_timber_context'  );
+
+if( function_exists('acf_add_options_sub_page') ) {
+	acf_add_options_sub_page(array(
+		'page_title' => 'Site Options',
+		'menu_title' => 'Site Options',
+		'menu_slug' => 'site_options',
+		'capability' => 'edit_posts',
+		'parent_slug' => '',
+		'position' => false,
+		'icon_url' => false,
+		'redirect' => false,
+	));
+}
+
+/************* END OPTIONS PAGE ***************/
+
+// /************* CUSTOMIZE LOGIN LOGO ***************/
+// add_action("login_head", "my_login_head");
+// function my_login_head() {
+// 	echo "
+// 	<style>
+// 	body.login #login h1 a {
+// 		background: url('".get_bloginfo('template_url')."/assets/src/img/logo.png') no-repeat scroll center top transparent;
+// 		height: 80px;
+// 		width: 300px;
+// 	}
+// 	</style>
+// 	";
+// }
+// /************* END ***************/
+
+// /************* REMOVE APPEARANCE CUSTOMIZE ***************/
+
+// function remove_customize_page(){
+// 	global $submenu;
+// 	unset($submenu['themes.php'][6]);
+// }
+// add_action('admin_menu', 'remove_customize_page');
+
+// /************* END REMOVE APPEARANCE CUSTOMIZE ***************/
+
+/************* HIDE DEFAULT POST TYPE MENU ***************/
+// add_action('admin_menu','remove_default_post_type');    function remove_default_post_type() {  	remove_menu_page('edit.php');  }
+/************* END HIDE DEFAULT POST TYPE MENU ***************/
 
 new LaunchframeSite();
 
