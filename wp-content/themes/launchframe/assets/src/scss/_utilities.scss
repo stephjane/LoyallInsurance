@@ -1,3 +1,60 @@
 .clearfix, .cf, .clear {
   overflow: auto;
 }
+.u-abs-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+}
+.bg {
+	&__img {
+        z-index: 0;
+        background-color: fade-out($gray-lighter, .6);
+        background-position: center;
+        background-size: cover;
+        &--contain {
+            z-index: 0;
+            background-color: fade-out($gray-lighter, .6);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    }
+    &__overlay {
+        &--light {
+            background-color: fade-out($gray, .9);
+        }
+    }
+}
+.u-flex {
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+.u-absolute {
+    @include media-breakpoint-up(lg) {
+        position: absolute;
+        &__center-right {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+        &__bottom-right {
+            right: 0;
+            bottom: 0;
+        }
+    }
+}
+.u-relative {
+    position: relative;
+}
+.u-padding-0 {
+    padding: 0;
+}
+.u-margin-0 {
+    margin: 0;
+}
