@@ -7,7 +7,7 @@
 var gulp = require('gulp'),
   sass = require('gulp-sass'),
   sourcemaps = require('gulp-sourcemaps'),
-  // scsslint = require('gulp-scss-lint'),
+  scsslint = require('gulp-scss-lint'),
   watch = require('gulp-watch'),
   gulpLoadPlugins = require("gulp-load-plugins"),
   tasks = gulpLoadPlugins({scope: ["devDependencies"]}),
@@ -18,63 +18,48 @@ var gulp = require('gulp'),
   eslint = require('gulp-eslint'),
   replace = require('gulp-replace'),
   del = require('del'),
-  notify = tasks.notify,
-  request = require('request'),
-  path = require('path'),
-  // criticalcss = require('criticalcss'),
-  fs = require('fs'),
-  tmpDir = require('os').tmpdir();
+  notify = tasks.notify;
 
 gulp.task('dist-sass', function () {
-    gulp.src('./assets/src/scss/*.scss');
+    gulp.src('./assets/src/scss/*.scss')
+      .pipe(scsslint({
+        'config': 'scss-lint.yml',
+      }));
     gulp.src('./assets/src/scss/application.scss')
-    // .pipe(tasks.sourcemaps.init())
+    //.pipe(tasks.sourcemaps.init())
       .pipe(tasks.sass())
+      .on('error', function(message){
+        console.log(message);
+      })
       .pipe(tasks.autoprefixer('last 2 versions', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
       .pipe(gulp.dest('./assets/dist/css'))
       .pipe(tasks.rename({suffix: '.min'}))
       .pipe(tasks.cssmin())
-    // .pipe(tasks.sourcemaps.write())
+    //.pipe(tasks.sourcemaps.write())
     .pipe(gulp.dest('./assets/dist/css'));
 });
 
-gulp.task('critical-css', function() {
-  var cssUrl = 'http://edr.dev/wp-content/themes/launchframe/assets/dist/css/application.css';
-  var cssPath = path.join( tmpDir, 'style.css' );
-  request(cssUrl).pipe(fs.createWriteStream(cssPath)).on('close', function() {
-    criticalcss.getRules(cssPath, function(err, output) {
-      if (err) {
-        throw new Error(err);
-      } else {
-        criticalcss.findCritical("http://edr.dev/", { rules: JSON.parse(output) }, function(err, output) {
-          if (err) {
-            throw new Error(err);
-          } else {
-            fs.writeFileSync('./assets/dist/css/critical.css', output);
-          }
-        });
-      }
-    });
-  });
-});
-
 gulp.task('dist-js', function () {
-  gulp.src(['./assets/src/js/plugins.js', './assets/src/js/script.js'])
-      // .pipe(sourcemaps.init())
+
+  gulp.src('./assets/src/js/script.js')
+      .pipe(sourcemaps.init())
       .pipe(tasks.concat('./assets/dist/js/script.js'))
+      .pipe(eslint())
       .pipe(babel())
       .pipe(gulp.dest('./'))
       .pipe(tasks.rename({suffix: '.min'}))
       .pipe(tasks.uglify())
+      .pipe(eslint.format())
       .pipe(gulp.dest('./'))
-      // .pipe(sourcemaps.write('.'))
+      .pipe(sourcemaps.write('.'))
       .pipe(livereload())
       .on('error', function(message){
         console.log(message);
       });
-  gulp.src(['./assets/vendor/slick.js/slick/slick.min.js', './assets/vendor/handlebars/handlebars.min.js', './assets/vendor/selectize/selectize.min.js', './assets/vendor/modernizr/modernizr.min.js'])
+  gulp.src('./assets/vendor/slick.js/slick/slick.min.js')
     .pipe(tasks.concat('./assets/dist/js/plugins.js'))
     .pipe(gulp.dest('./'))
+
 });
 
 gulp.task('dist-img', function(){
@@ -84,14 +69,28 @@ gulp.task('dist-img', function(){
     .pipe(gulp.dest('assets/dist/img'));
 });
 
+gulp.task('version-update', function(){
+  var date = new Date().toISOString();
+  del(['inc/version.php']);
+  return gulp.src(['inc/version.tmp.php'])
+    .pipe(replace('PACKAGEVERSION', "'"+date+"'"))
+    .pipe(tasks.rename({
+      basename: 'version',
+      extname: '.php'
+    }))
+    .pipe(gulp.dest('inc/'));
+});
+
 gulp.task('watch', function () {
   livereload.listen();
   watch('assets/src/**/*.js', function () {
     gulp.start('dist-js');
-      livereload.changed();
+    livereload.changed();
+    gulp.start('version-update');
   });
   watch('assets/src/**/*.scss', function () {
     gulp.start('dist-sass');
+    gulp.start('version-update');
     livereload.changed();
   });
 });
