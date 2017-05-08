@@ -109,6 +109,8 @@ function my_acf_show_admin( $show ) {
 
     if ($current_user->user_login == 'loyall') {
     	return current_user_can('manage_options');
+    } elseif ($current_user->user_login == 'admin') {
+    	return current_user_can('manage_options');
     } else {
     	return false;
     }
