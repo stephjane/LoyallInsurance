@@ -23,13 +23,27 @@
 //
 // Grayscale and brand colors for use across Bootstrap.
 
-$gray-dark:                 #373a3c;
-$gray:                      #55595c;
-$gray-light:                #818a91;
-$gray-lighter:              #eceeef;
-$gray-lightest:             #f7f7f9;
+$gray-dark:                 #373A3C;
+$gray:                      #55595C;
+$gray-light:                #818A91;
+$gray-lighter:              #ECEEEF;
+$gray-lightest:             #F7F7F9;
+$white:                     #FFF;
+$black:                     #000;
+$black-light:               lighten($black, 10%);
+$black-lighter:             lighten($black, 20%);
+$black-lightest:            lighten($black, 30%);
+$black-extra-light:         lighten($black, 40%);
 
-$brand-primary:             #0275d8;
+
+$brand-primary:             #530AE2;
+$primary-light:             lighten($brand-primary, 10%);
+$primary-lighter:           lighten($brand-primary, 20%);
+$primary-dark:              darken($brand-primary, 10%);
+$primary-darker:            darken($brand-primary, 20%);
+
+$brand-secondary:           #89D2DC;
+$brand-tertiary:            #0A4EE2;
 //$brand-success:             #5cb85c;
 //$brand-info:                #5bc0de;
 //$brand-warning:             #f0ad4e;
@@ -127,7 +141,7 @@ $font-family-serif:          Georgia, "Times New Roman", Times, serif;
 // Pixel value used to responsively scale all typography. Applied to the `<html>` element.
 //$font-size-root:             16px;
 
-$font-size-base:             1rem;
+$font-size-base:             1.25rem;
 $font-size-lg:               1.25rem;
 $font-size-sm:               .85rem;
 $font-size-xs:               .75rem;

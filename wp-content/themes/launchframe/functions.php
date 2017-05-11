@@ -48,30 +48,30 @@ class LaunchframeSite extends TimberSite {
 
 	function register_post_types() {
 		$labels = array(
-			'name'               => 'Resources',
-			'singular_name'      => 'Resource',
-			'menu_name'          => 'Resources',
-			'name_admin_bar'     => 'Resource',
+			'name'               => 'Videos',
+			'singular_name'      => 'Video',
+			'menu_name'          => 'Videos',
+			'name_admin_bar'     => 'Video',
 			'add_new'            => 'Add New',
-			'add_new_item'       => 'Add New Resource',
-			'new_item'           => 'New Resource',
-			'edit_item'          => 'Edit Resource',
-			'view_item'          => 'View Resource',
-			'all_items'          => 'All Resources',
-			'search_items'       => 'Search Resources',
-			'parent_item_colon'  => 'Parent Resources:',
-			'not_found'          => 'No resources found.',
-			'not_found_in_trash' => 'No resources found in Trash.'
+			'add_new_item'       => 'Add New Video',
+			'new_item'           => 'New Video',
+			'edit_item'          => 'Edit Video',
+			'view_item'          => 'View Video',
+			'all_items'          => 'All Videos',
+			'search_items'       => 'Search Videos',
+			'parent_item_colon'  => 'Parent Videos:',
+			'not_found'          => 'No videos found.',
+			'not_found_in_trash' => 'No videos found in Trash.'
 		);
 		$args = array(
 			'labels'             => $labels,
-	        'description'        => 'Resources',
+	        'description'        => 'Videos',
 			'public'             => true,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'rewrite'            => array( 'slug' => 'resources' ),
+			'rewrite'            => array( 'slug' => 'videos' ),
 			'capability_type'    => 'post',
 			'has_archive'        => false,
 			'hierarchical'       => false,
@@ -79,7 +79,109 @@ class LaunchframeSite extends TimberSite {
 			'taxonomies'         => array(),
 			'supports'           => array( 'title' )
 		);
-		register_post_type( 'resource', $args );
+		register_post_type( 'video', $args );
+
+		$labels = array(
+			'name'               => 'Jobs',
+			'singular_name'      => 'Job',
+			'menu_name'          => 'Jobs',
+			'name_admin_bar'     => 'Job',
+			'add_new'            => 'Add New',
+			'add_new_item'       => 'Add New Job',
+			'new_item'           => 'New Job',
+			'edit_item'          => 'Edit Job',
+			'view_item'          => 'View Job',
+			'all_items'          => 'All Jobs',
+			'search_items'       => 'Search Jobs',
+			'parent_item_colon'  => 'Parent Jobs:',
+			'not_found'          => 'No jobs found.',
+			'not_found_in_trash' => 'No jobs found in Trash.'
+		);
+		$args = array(
+			'labels'             => $labels,
+	        'description'        => 'Jobs',
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'jobs' ),
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'taxonomies'         => array(),
+			'supports'           => array( 'title' )
+		);
+		register_post_type( 'job', $args );
+
+		$labels = array(
+			'name'               => 'Announcements',
+			'singular_name'      => 'Announcement',
+			'menu_name'          => 'Announcements',
+			'name_admin_bar'     => 'Announcement',
+			'add_new'            => 'Add New',
+			'add_new_item'       => 'Add New Announcement',
+			'new_item'           => 'New Announcement',
+			'edit_item'          => 'Edit Announcement',
+			'view_item'          => 'View Announcement',
+			'all_items'          => 'All Announcements',
+			'search_items'       => 'Search Announcements',
+			'parent_item_colon'  => 'Parent Announcements:',
+			'not_found'          => 'No announcements found.',
+			'not_found_in_trash' => 'No announcements found in Trash.'
+		);
+		$args = array(
+			'labels'             => $labels,
+	        'description'        => 'Announcements',
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'announcements' ),
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'taxonomies'         => array(),
+			'supports'           => array( 'title' )
+		);
+		register_post_type( 'announcement', $args );
+
+		$labels = array(
+			'name'               => 'Articles',
+			'singular_name'      => 'Article',
+			'menu_name'          => 'Articles',
+			'name_admin_bar'     => 'Article',
+			'add_new'            => 'Add New',
+			'add_new_item'       => 'Add New Article',
+			'new_item'           => 'New Article',
+			'edit_item'          => 'Edit Article',
+			'view_item'          => 'View Article',
+			'all_items'          => 'All Articles',
+			'search_items'       => 'Search Articles',
+			'parent_item_colon'  => 'Parent Articles:',
+			'not_found'          => 'No articles found.',
+			'not_found_in_trash' => 'No articles found in Trash.'
+		);
+		$args = array(
+			'labels'             => $labels,
+	        'description'        => 'Articles',
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'articles' ),
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'taxonomies'         => array(),
+			'supports'           => array( 'title' )
+		);
+		register_post_type( 'article', $args );
 	}
 
 	function register_taxonomies() {

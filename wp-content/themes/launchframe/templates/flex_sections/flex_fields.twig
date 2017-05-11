@@ -1,9 +1,17 @@
 <section class="flex-section">
-	{# {% for item in post.get_field('flex_fields') %}
+	{% for item in post.get_field('flex_fields') %}
 
-		{% if item.acf_fc_layout == 'donate_cta' %}
-        	{% include "flex_sections/donate_cta.twig" %}
+		{% if item.acf_fc_layout == 'header' %}
+        	{% include "flex_sections/header.twig" %}
+        {% elseif item.acf_fc_layout == 'paragraph' %}
+        	{% include "flex_sections/paragraph.twig" %}
+        {% elseif item.acf_fc_layout == 'featured_posts' %}
+        	{% include "flex_sections/featured_posts.twig" %}
+        {% elseif item.acf_fc_layout == 'call_to_action' %}
+        	{% include "flex_sections/call_to_action.twig" %}
+        {% elseif item.acf_fc_layout == 'wysiwyg_editor' %}
+        	{% include "flex_sections/wysiwyg_editor.twig" %}
         {% endif %}
         
-    {% endfor %} #}
+    {% endfor %}
 </section>

@@ -1,14 +1,21 @@
 {% extends "base.twig" %}
 
 {% block content %}
-	<div class="content-wrapper">
-		<article class="post-type-{{post.post_type}}" id="post-{{post.ID}}">
-			<section class="article-content">
-				<h1 class="article-h1">{{post.title}}</h1>
-				<div class="article-body">
-					{{post.content}}
-				</div>
-			</section>
-		</article>
-	</div><!-- /content-wrapper -->
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Form</h1>
+				<form>
+					<input type="text" name="" placeholder="input"></br>
+					<textarea placeholder="textarea"></textarea></br>
+					<button type="submit">submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% include "flex_sections/flex_fields.twig" %}
 {% endblock %}
